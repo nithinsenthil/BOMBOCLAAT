@@ -12,16 +12,9 @@ def testConnection():
     rv = "<p>Server connection works</p>"
     return json_response(200)
 
-# headers={"Access-Control-Allow-Origin": "true"}
-# document.getElementById('increaseBtn').onclick = async function() {
-#   const response = await fetch("http://localhost:8000/api/testConnection");
-#   const jsonData = await response.json();
-#   console.log(jsonData);
-#   //count += 1;
-#   //document.getElementById("countLabel").innerHTML = count;
-# }
 
-@app.route('/submit', methods=['POST'])
+
+@app.route('/api/submit', methods=['POST'])
 def submit():
     # We use 'force' to skip mimetype checking to have shorter curl command.
     data = request.get_json(force=True)
@@ -32,7 +25,7 @@ def submit():
 
     print("There are " + str(numShirts) + " shirts.")
 
-    return json_response(400, status="Upload Confirmed")
+    return json_response(200, status="Upload Confirmed")
 
 
 @app.route('/generateAnalysis')
