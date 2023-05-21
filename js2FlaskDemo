@@ -1,0 +1,28 @@
+GET DEMO
+
+document.getElementById('increaseBtn').onclick = async function() {
+  const response = await fetch("http://localhost:8000/api/testConnection");
+  const jsonData = await response.json();
+  console.log(jsonData);
+  //count += 1;
+  //document.getElementById("countLabel").innerHTML = count;
+}
+
+POST DEMO
+
+document.getElementById('increaseBtn').onclick = async function() {
+  const response = await fetch("http://localhost:8000/api/submit", {
+        method: "POST",
+        mode: 'cors',
+        crossorigin: 'true',
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "http://127.0.0.1:5000", 'Access-Control-Allow-Credentials': 'true' },
+        body: JSON.stringify(
+          {
+            "shirts": 21
+          })
+      });
+  const jsonData = await response.json();
+  console.log(jsonData);
+  //count += 1;
+  //document.getElementById("countLabel").innerHTML = count;
+}
