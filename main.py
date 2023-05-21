@@ -2,11 +2,13 @@ from flask import Flask, request
 from flask_json import FlaskJSON, JsonError, json_response, as_json
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+from flask_cors import CORS, cross_origin
 
 
 # Start server
 app = Flask(__name__)
 FlaskJSON(app)
+CORS(app)
 
 
 # Connect to MongoDB cluster
@@ -15,19 +17,14 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 
 
 # Server/Database connection testing
-@app.route("/testConnection")
+@app.route("/api/testConnection")
 def testConnection():
-    try:
-        client.admin.command('ping')
-        ping = "Pinged your deployment. You successfully connected to MongoDB!\n"
-    except Exception as e:
-        print(e)
-
-    return ping
+    rv = "<p>Server connection works</p>"
+    return json_response(200)
 
 
-# Push to cluster
-@app.route('/submit', methods=['POST'])
+
+@app.route('/api/submit', methods=['POST'])
 def submit():
     # We use 'force' to skip mimetype checking to have shorter curl command.
     data = request.get_json(force=True)
@@ -44,4 +41,8 @@ def submit():
 # Pull data for analysis
 @app.route('/generateAnalysis')
 def generateAnalysis():
+
     return "Feature Currently Unavailable\n"
+
+app.run(port=8000, debug=True)
+
